@@ -53,9 +53,59 @@ Model Waveform
 
 Program
 
+'''clc;
+clear all;
+close all;
+
+% ----------- Table No. 9 Values --------------
+Am = 8.9;        % Message amplitude
+fm = 370;        % Message frequency (Hz)
+Ac = 17.8;       % Carrier amplitude
+fc = 10000;      % Carrier frequency (Hz)
+fs = 100000;     % Sampling frequency (Hz)
+% ---------------------------------------------
+
+t = 0:1/fs:0.01;   % Time for 10 ms
+
+% Message signal
+m = Am*cos(2*pi*fm*t);
+
+% Hilbert transform (for SSB)
+mh = imag(hilbert(m));
+
+% Carrier signals
+c = cos(2*pi*fc*t);
+s = sin(2*pi*fc*t);
+
+% Generate USB (Upper Sideband)
+s_usb = Ac * (m.*c - mh.*s);
+
+% ------------- Plots -----------------
+figure;
+subplot(3,1,1);
+plot(t, m);
+title('Message Signal');
+xlabel('Time (s)');
+ylabel('Amplitude'); grid on;
+
+subplot(3,1,2);
+plot(t, mh);
+title('Hilbert Transform of Message');
+xlabel('Time (s)');
+ylabel('Amplitude'); grid on;
+
+subplot(3,1,3);
+plot(t, s_usb);
+title('SSB-SC USB Signal');
+xlabel('Time (s)');
+ylabel('Amplitude'); grid on;
+'''
+
 OUTPUT WAVEFORM
+![WhatsApp Image 2025-11-26 at 08 12 33_64b2809e](https://github.com/user-attachments/assets/a1a03bc9-a70e-4196-b2d8-7589053d8e6b)
 
 TABULATION
+![WhatsApp Image 2025-11-26 at 08 12 32_74c8f5a1](https://github.com/user-attachments/assets/f644fff7-5075-4243-b942-280f7fe45e95)
 
 
 
